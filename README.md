@@ -18,9 +18,21 @@ Version: 0.1.0
 ## Usage
 
 ```sh
-mac-type-string --unicode-char <hex>    Type the Unicode character U+<hex>
-mac-type-string --string <text>         Type the given string
+mac-type-string [--verbose] --unicode-char <hex>    Type the Unicode character U+<hex>
+mac-type-string [--verbose] --string <text>          Type the given string
+mac-type-string --version                            Print version and exit
+mac-type-string --help                               Show help and exit
 ```
+
+### Flags
+
+| Flag | Description |
+|------|-------------|
+| `--unicode-char <hex>` | Type the Unicode character at code point U+`<hex>` |
+| `--string <text>` | Type the given string literally |
+| `--verbose` | Print debug info to stderr (combine with `--unicode-char` or `--string`) |
+| `--version` | Print version and exit |
+| `--help`, `-h` | Show help and exit |
 
 ### Permissions
 

@@ -23,6 +23,11 @@ struct MacTypeString {
             return
         }
 
+        if args.contains("--help") || args.contains("-h") {
+            printUsage()
+            return
+        }
+
         if let idx = args.firstIndex(of: "--verbose") {
             verbose = true
             args.remove(at: idx)
@@ -97,6 +102,14 @@ struct MacTypeString {
               mac-type-string [--verbose] --unicode-char <hex>    Type the Unicode character U+<hex>
               mac-type-string [--verbose] --string <text>          Type the given string
               mac-type-string --version                            Show version
+              mac-type-string --help                               Show this help
+
+            Flags:
+              --unicode-char <hex>   Type the Unicode character at code point U+<hex>
+              --string <text>        Type the given string literally
+              --verbose              Print debug info to stderr
+              --version              Print version and exit
+              --help, -h             Show this help and exit
 
             Examples:
               mac-type-string --unicode-char 2192      Types →
@@ -104,7 +117,7 @@ struct MacTypeString {
               mac-type-string --string 'Hello world'   Types Hello world
               mac-type-string --verbose --string test  Types test with debug output
             """
-        fputs(usage, stderr)
+        print(usage)
     }
 
     static func typeString(_ text: String, source: CGEventSource?) {
