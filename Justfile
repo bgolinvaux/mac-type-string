@@ -5,6 +5,29 @@
 build:
     swift build -c release
 
+# Run integration tests (requires GUI session + Accessibility permissions)
+test: build
+    #!/usr/bin/env bash
+    set -euo pipefail
+    plist="$HOME/Library/Containers/com.apple.TextEdit/Data/Library/Preferences/com.apple.TextEdit.plist"
+    # Quit TextEdit, then disable auto-capitalization via PlistBuddy
+    # (using `defaults` can hang due to cfprefsd locking)
+    osascript -e 'tell application "TextEdit" to quit' 2>/dev/null || true
+    sleep 0.5
+    /usr/libexec/PlistBuddy -c "Set :NSAutomaticCapitalizationEnabled false" "$plist" 2>/dev/null \
+        || /usr/libexec/PlistBuddy -c "Add :NSAutomaticCapitalizationEnabled bool false" "$plist"
+    # Force plain text mode (RichText=0) so .txt files are saved as plain text
+    /usr/libexec/PlistBuddy -c "Set :RichText 0" "$plist" 2>/dev/null \
+        || /usr/libexec/PlistBuddy -c "Add :RichText integer 0" "$plist"
+    cleanup() {
+        osascript -e 'tell application "TextEdit" to quit' 2>/dev/null || true
+        sleep 0.5
+        /usr/libexec/PlistBuddy -c "Delete :NSAutomaticCapitalizationEnabled" "$plist" 2>/dev/null || true
+        /usr/libexec/PlistBuddy -c "Delete :RichText" "$plist" 2>/dev/null || true
+    }
+    trap cleanup EXIT
+    swift test
+
 # Install to ~/.local/bin (creates dir if needed, checks PATH)
 install: build
     #!/usr/bin/env bash
