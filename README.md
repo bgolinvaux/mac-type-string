@@ -25,8 +25,7 @@ This tool posts `CGEvent` keyboard events. macOS requires the **calling
 process** (or its parent) to have **Accessibility** permission. This means:
 
 
-- If you invoke `mac-type-string` from **Terminal.app**, then Terminal needs
-  Accessibility access.
+- If you invoke `mac-type-string` from **Terminal.app**, then Terminal needs Accessibility access.
 - If you invoke it from **Alfred**, then Alfred itself (or
   whatever launches the shell command if you use a less direct approach) needs it.
 - The same applies for any launcher, automation tool, or shell that calls it.
@@ -163,6 +162,11 @@ connection"_ or TextEdit will simply fail to launch. There is no workaround:
 > **Note:** **LaunchAgents** (as opposed to LaunchDaemons) _do_ run within the
 > user's login session and _can_ post `CGEvent`s, provided they have
 > Accessibility permission. This is how tools like Karabiner work.
+
+## Alfred integration
+Use a script action 
+
+![Alfred Script Action that calls 'mac-type-string --string 😊'](<docs/alfred-script-action.png>)
 
 ## Karabiner integration
 
