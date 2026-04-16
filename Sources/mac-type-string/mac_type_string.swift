@@ -3,6 +3,8 @@ import ApplicationServices
 import CoreGraphics
 import Foundation
 
+let version = "0.1.0"
+
 nonisolated(unsafe) var verbose = false
 
 func log(_ msg: @autoclosure () -> String) {
@@ -15,6 +17,11 @@ func log(_ msg: @autoclosure () -> String) {
 struct MacTypeString {
     static func main() {
         var args = Array(CommandLine.arguments.dropFirst())  // drop argv[0]
+
+        if args.contains("--version") {
+            print("mac-type-string \(version)")
+            return
+        }
 
         if let idx = args.firstIndex(of: "--verbose") {
             verbose = true
@@ -89,6 +96,7 @@ struct MacTypeString {
             Usage:
               mac-type-string [--verbose] --unicode-char <hex>    Type the Unicode character U+<hex>
               mac-type-string [--verbose] --string <text>          Type the given string
+              mac-type-string --version                            Show version
 
             Examples:
               mac-type-string --unicode-char 2192      Types →

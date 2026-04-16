@@ -8,9 +8,12 @@ Uses `CGEvent` keyboard simulation (`CGEventKeyboardSetUnicodeString`) which is
 far more reliable across apps than the Accessibility `AXUIElement` value-replace
 approach.
 
+Unsure if this already exists or will be useful at all, I have not gone further and published a package (yet), so for now, in order to use the tool, you will need build tools. Normally, `xcode-select --install` is enough to get the necessary Swift toolchain and libraries, although I have only tested with the full XCode installation on macOS 26.4.1.
+
 Author: Claude, assisted by [Benjamin Golinvaux](https://github.com/bgolinvaux)
 for preliminary research and testing 😀
 
+Version: 0.1.0
 
 ## Usage
 
